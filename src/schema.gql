@@ -17,7 +17,7 @@ type Query {
 type Mutation {
   createItem(createItemInput: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
-  removeItem(id: Int!): Item!
+  removeItem(id: ID!): Item!
 }
 
 input CreateItemInput {
