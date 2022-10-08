@@ -15,11 +15,11 @@ export class Item {
   
   @Column()
   @Field(() => Float)
-  quantity: string;
+  quantity: number;
 
-  @Column()
-  @Field(() => String)
-  quantityUnits: string; //g, ml, kg, tsp
+  @Column({nullable: true})
+  @Field(() => String, {nullable: true})
+  quantityUnits?: string; //g, ml, kg, tsp
 
   //stores
   //user
