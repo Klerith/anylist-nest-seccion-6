@@ -3,8 +3,10 @@
 # ------------------------------------------------------
 
 type Item {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  name: String!
+  quantity: Float!
+  quantityUnits: String!
 }
 
 type Query {
