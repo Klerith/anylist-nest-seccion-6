@@ -39,8 +39,14 @@ export class UsersService {
     return [];
   }
 
-  findOne(id: string): Promise<User> {
-    throw new Error(`findOne method not implement`);
+  async findOneByEmail(email: string): Promise<User> {
+   
+    try {
+      return this.usersRepository.findOneByOrFail({email})
+    } catch (error) {
+      this.handleDBErrors(error);
+    }
+
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
@@ -52,12 +58,13 @@ export class UsersService {
   }
 
   private handleDBErrors(error: any): never{
-    this.logger.error(error);
     
     if(error.code === '23505'){
       throw new BadRequestException(error.detail.replace('Key', ''));
     }
-
+    
+    this.logger.error(error);
+    
     throw new InternalServerErrorException('Please check server logs');
   }
 }
