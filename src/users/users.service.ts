@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './entities/user.entity';
@@ -42,9 +42,15 @@ export class UsersService {
   async findOneByEmail(email: string): Promise<User> {
    
     try {
-      return this.usersRepository.findOneByOrFail({email})
+      return await this.usersRepository.findOneByOrFail({email})
     } catch (error) {
-      this.handleDBErrors(error);
+      
+      throw new NotFoundException(`${ email } not found`);
+
+      // this.handleDBErrors({
+      //   code: 'error-001',
+      //   detail: `${ email } not found`
+      // });
     }
 
   }
@@ -62,7 +68,11 @@ export class UsersService {
     if(error.code === '23505'){
       throw new BadRequestException(error.detail.replace('Key', ''));
     }
-    
+
+    if(error.code == 'error-001'){
+      throw new BadRequestException(error.detail.replace('Key', ''));
+    }
+
     this.logger.error(error);
     
     throw new InternalServerErrorException('Please check server logs');
