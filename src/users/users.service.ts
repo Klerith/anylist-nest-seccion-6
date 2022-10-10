@@ -39,10 +39,10 @@ export class UsersService {
     return [];
   }
 
-  async findOneByEmail(email: string): Promise<User> {
+  async findOneByEmail( email: string ): Promise<User> {
    
     try {
-      return await this.usersRepository.findOneByOrFail({email})
+      return await this.usersRepository.findOneByOrFail({ email })
     } catch (error) {
       
       throw new NotFoundException(`${ email } not found`);
@@ -55,25 +55,35 @@ export class UsersService {
 
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
+  async findOneById( id: string ): Promise<User> {
+   
+    try {
+      return await this.usersRepository.findOneByOrFail({ id })
+    } catch (error) {
+      throw new NotFoundException(`${ id } not found`);
+    }
+
+  }
+
+  update( id: number, updateUserInput: UpdateUserInput ) {
     return `This action updates a #${id} user`;
   }
 
-  block(id: string): Promise<User> {
+  block( id: string ): Promise<User> {
     throw new Error(`block method not implement`);
   }
 
-  private handleDBErrors(error: any): never{
+  private handleDBErrors( error: any ): never{
     
-    if(error.code === '23505'){
+    if( error.code === '23505' ){
       throw new BadRequestException(error.detail.replace('Key', ''));
     }
 
-    if(error.code == 'error-001'){
+    if( error.code == 'error-001' ){
       throw new BadRequestException(error.detail.replace('Key', ''));
     }
 
-    this.logger.error(error);
+    this.logger.error( error );
     
     throw new InternalServerErrorException('Please check server logs');
   }

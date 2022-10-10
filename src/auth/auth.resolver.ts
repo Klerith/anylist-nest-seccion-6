@@ -6,8 +6,11 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 import { SignupInput, LoginInput } from './dto/inputs';
 import { AuthResponse } from './types/auth-response.types';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from '../users/entities/user.entity';
 
 @Resolver()
+
 export class AuthResolver {
   constructor(
     private readonly authService: AuthService
@@ -29,10 +32,11 @@ export class AuthResolver {
 
   @Query( () => AuthResponse, { name: 'revalidate' })
   @UseGuards( JwtAuthGuard )
-  async revalidateToken(
-    //@CurrentUser user: User
+  revalidateToken(
+    @CurrentUser() user: User
   ): Promise<AuthResponse>{
     // return this.authService.revalidateToken(  )
+    console.log('revalidateToken, user:', user)
     throw new Error('No implementado');
   }
 }
