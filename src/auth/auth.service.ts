@@ -33,7 +33,7 @@ export class AuthService {
             throw new BadRequestException('Email / Password do not match');
         }
         
-        //TODO:
+        //TODO: JWT
         const token = 'ABC123';
         
         return {
