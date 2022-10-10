@@ -1,20 +1,20 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name: 'users'})
+@Entity({ name: 'users' })
 @ObjectType()
 export class User {
   
   @PrimaryGeneratedColumn('uuid')
-  @Field(() => ID)
+  @Field( () => ID )
   id: string;
 
   @Column()
-  @Field(() => String)
+  @Field( () => String )
   fullName: string;
 
-  @Column({unique: true})
-  @Field(() => String)
+  @Column({ unique: true })
+  @Field( () => String )
   email: string;
 
   @Column()
@@ -26,14 +26,14 @@ export class User {
     array: true,
     default: ['user']
   })
-  @Field(() => [String])
+  @Field( () => [ String ])
   roles: string[];
 
   @Column({
     type: 'boolean',
     default: true
   })
-  @Field(() => Boolean)
+  @Field( () => Boolean )
   isActive: boolean;
 
   //TODO: relaciones y otras cosas

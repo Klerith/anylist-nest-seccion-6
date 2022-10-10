@@ -20,7 +20,7 @@ export class AuthService {
         return this.jwtService.sign({ id: userId });
     }
 
-    async signup(signupInput: SignupInput): Promise<AuthResponse> { 
+    async signup( signupInput: SignupInput ): Promise<AuthResponse> { 
 
         const user = await this.usersService.create( signupInput )
 
@@ -30,9 +30,9 @@ export class AuthService {
                
     }
 
-    async login(loginInput: LoginInput): Promise<AuthResponse>{
+    async login( loginInput: LoginInput ): Promise<AuthResponse>{
         
-        const {email, password} = loginInput;
+        const { email, password } = loginInput;
         const user = await this.usersService.findOneByEmail( email );
 
         if( !bcrypt.compareSync( password, user.password) ){

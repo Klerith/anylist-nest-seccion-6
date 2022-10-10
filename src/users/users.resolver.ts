@@ -8,7 +8,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query(() => [User], { name: 'users' })
+  @Query(() => [ User ], { name: 'users' })
   findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
@@ -29,6 +29,6 @@ export class UsersResolver {
   @Mutation(() => User)
   blockUser(@Args('id', { type: () => ID }) id: string
   ): Promise<User> {
-    return this.usersService.block(id);
+    return this.usersService.block( id );
   }
 }

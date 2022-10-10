@@ -4,11 +4,11 @@ import { IsEmail, MinLength } from "class-validator";
 @InputType()
 export class LoginInput {
     
-    @Field(() => String)
+    @Field( () => String )
     @IsEmail()
     email: string;
 
-    @Field(() => String)
+    @Field( () => String )
     @MinLength(6)
     password: string;
 

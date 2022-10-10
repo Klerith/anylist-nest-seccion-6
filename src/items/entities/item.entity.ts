@@ -1,24 +1,24 @@
 import { ObjectType, Field, Int, ID, Float } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name: 'items'})
+@Entity({ name: 'items' })
 @ObjectType()
 export class Item {
   
   @PrimaryGeneratedColumn('uuid')
-  @Field(() => ID)
+  @Field( () => ID )
   id: string;
 
   @Column()
-  @Field(() => String)
+  @Field( () => String )
   name: string;
   
   @Column()
-  @Field(() => Float)
+  @Field( () => Float )
   quantity: number;
 
-  @Column({nullable: true})
-  @Field(() => String, {nullable: true})
+  @Column({ nullable: true })
+  @Field( () => String, { nullable: true })
   quantityUnits?: string; //g, ml, kg, tsp
 
   //stores

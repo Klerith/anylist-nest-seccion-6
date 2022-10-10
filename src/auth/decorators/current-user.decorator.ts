@@ -1,16 +1,29 @@
-import { createParamDecorator, ExecutionContext, InternalServerErrorException } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext, ForbiddenException, InternalServerErrorException } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { ValidRoles } from '../enums/valid-roles.enum';
+import { User } from '../../users/entities/user.entity';
 
 export const CurrentUser = createParamDecorator( 
-    ( roles =[], context: ExecutionContext ) => {
+    ( roles: ValidRoles[] = [], context: ExecutionContext ) => {
 
         const ctx = GqlExecutionContext.create( context )
-        const user = ctx.getContext().req.user;
+        const user: User = ctx.getContext().req.user;
 
-        if( !user ) {
+        if ( !user ) {
             throw new InternalServerErrorException(`No user inside the request - make sure that we used the AuthGuard`)
         }
 
-        return user;
+        if ( roles.length === 0 ) return user;
+
+        for ( const role of user.roles ) {
+            //TODO: Eliminar Valid Roles
+            if ( roles.includes( role as ValidRoles ) ) {
+                return user;
+            }
+        }
+
+        throw new ForbiddenException(
+            `User ${ user.fullName } need a valid role [${ roles }]`
+        )
 
 })

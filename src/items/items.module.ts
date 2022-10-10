@@ -11,7 +11,7 @@ import { Item } from './entities/item.entity';
     ItemsService
   ],
   imports: [
-    TypeOrmModule.forFeature([Item])
+    TypeOrmModule.forFeature([ Item ])
   ]
 })
 export class ItemsModule {}
