@@ -34,9 +34,7 @@ export class AuthResolver {
   @UseGuards( JwtAuthGuard )
   revalidateToken(
     @CurrentUser() user: User
-  ): Promise<AuthResponse>{
-    // return this.authService.revalidateToken(  )
-    console.log('revalidateToken, user:', user)
-    throw new Error('No implementado');
+  ): AuthResponse{
+    return this.authService.revalidateToken( user );
   }
 }
